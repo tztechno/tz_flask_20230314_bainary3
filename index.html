@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Flask App</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+    <style>
+        #slider {
+            width: 5cm;
+            height: 10px;
+        }
+
+        #slider-value {
+            margin-top: 10px;
+            font-size: 1.2em;
+            text-align: left;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: flex-start;
+            margin: 10px 0 0 20px;
+        }
+
+        .image-container img {
+            margin-right: 10px;
+            width: 250px;
+            height: auto;
+        }
+
+        .image-container .title {
+            margin-top: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h2>Binary Image</h2>
+
+    <form method="post" action="/">
+        <div id="slider"></div>
+        <input type="hidden" name="thres" id="thres_val">
+        <button type="submit">Submit</button>
+    </form>
+    <div id="slider-value">128</div>
+
+    <script>
+        $(function () {
+            var slider = $("#slider");
+            var output = $("#slider-value");
+            var thres_val = $("#thres_val");
+
+            slider.slider({
+                min: 0,
+                max: 255,
+                value: 128,
+                slide: function (event, ui) {
+                    output.text(ui.value);
+                    thres_val.val(ui.value);
+                }
+            });
+
+            output.text(slider.slider("value"));
+        });
+    </script>
+
+    <br><br>
+
+    <div class="image-container">
+        <div>
+            <img src="static/sample.png" alt="Original Image">
+            <div class="title">Original Image</div>
+        </div>
+        <div>
+            <img src="static/gray_img.png" alt="Gray Image">
+            <div class="title">Gray Image</div>
+        </div>
+        <div>
+            <img src="static/binary_img.png" alt="Binary Image">
+            <div class="title">Binary Image {{thres}}</div>
+        </div>
+    </div>
+
+</body>
+
+</html>
